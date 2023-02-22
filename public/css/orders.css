@@ -1,0 +1,70 @@
+.order-img{
+    flex: 5%;
+}  
+.order-img{
+    height: 100px;
+    display: flex;
+    align-items: center;
+    padding-left: 10px;
+}
+.order-img img{
+    max-width: 80px;
+} 
+.order-detail{
+    flex: 40%;
+    padding-left: 15px;
+    
+}
+.order-status{
+    flex: 25%;
+}
+.order-status div{
+    padding: 10px;
+    background-color: rgba(0, 0, 255, 0.147);
+    color: blue;
+    display: flex;
+    justify-content: center;
+    border-radius: 5px;
+    font-weight: 500;
+}
+.order-status .pending, .order-status .returnProcessing{
+    background-color: #ff99002f;
+    color: #FF9900;
+}
+.order-status .returned, .order-status .cancelled{
+    background-color: #ca01012d;
+    color: #CA0101;
+}
+.order-status .delivered{
+    background-color: #0090292b;
+    color: #009028;
+}
+.order-cancel{
+    flex: 20%;
+}
+.order-cancel button{
+    width: 100px;
+    height: 40px;
+    color: white;
+    background-color: var(--black);
+    border: none;
+    outline: none;
+
+}
+.order-cancel, .order-detail{
+    height:100%7;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+.order-status{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+/* .order-detail b{
+ font-size: .9rem;
+}
+.order-detail h5{
+    font-size: 1rem;
+} */

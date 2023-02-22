@@ -1,0 +1,136 @@
+<%- include('../partials/header') %>
+<div class="home-main">
+  <div class="container">
+    <div class="row">
+      <div class="home-banner" style="background-image: url(/images/banner.jpg);"></div>
+    </div>
+    <div class="row mt-5  d-flex justify-content-center">
+      <h6>Category</h6>
+      <div class="row mt-3 d-flex justify-content-center">
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c97ce7fc402860e4121e'"
+              style="
+                background-image: url(/images/phone.webp);
+              "
+            ></div> 
+            <b class="category">Smartphones</b>
+          </div>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c98de7fc402860e4122a'"
+              style="
+                background-image: url(/images/laptop.webp);
+              "
+            ></div>
+            <b class="category">Laptop</b>
+          </div>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c981e7fc402860e41222'"
+              style="
+                background-image: url(/images/tab.webp);
+              "
+            ></div>
+            <b class="category">Tablets</b>
+          </div>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c9b5e7fc402860e4122f'"
+              style="
+                background-image: url(images/watch.webp);
+              "
+            ></div>
+            <b class="category">Smartwatch</b>
+          </div>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c9b5e7fc402860e4122f'"
+              style="
+                background-image: url(/images/tv.jpg);
+              "
+            ></div>
+            <b class="category">TV</b>
+          </div>
+        </div>
+        <div class="col-4 col-md-2">
+          <div class="category-item">
+            <div
+              class="category-img"
+              onclick="window.location.href='/search?category=63f0c9bde7fc402860e41234'"
+              style="
+                background-image: url(/images/earphone.webp);
+              "
+            ></div>
+            <b class="category">Earphone</b>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row mt-5  d-flex justify-content-center">
+        <h6>Offers</h6>
+        <div class="row mt-3 ">
+            <div id="carouselExampleAutoplaying" class="carousel slide carousel-fade" data-bs-ride="carousel">
+                <div class="carousel-inner">
+                  <% offers.forEach(item=>{ %>
+                    <div class="carousel-item active" onclick="window.location.href='<%=item.url%>'">
+                      <img src="<%= item.image.url %> " class="d-block w-100 carousal-img" alt="...">
+                    </div>
+                  <% }) %> 
+                </div>
+                <button class="carousel-control-prev carousal-btn" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="prev">
+                  <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next carousal-btn" type="button" data-bs-target="#carouselExampleAutoplaying" data-bs-slide="next">
+                  <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                  <span class="visually-hidden">Next</span>
+                </button>
+              </div>
+        </div>
+    </div>
+    <div class="row mt-5  d-flex justify-content-center">
+      <h6>New Launches</h6>
+      <div class="row">
+        <% products.forEach(item=>{ %> 
+            <div class="col-6 col-md-3">
+              <div class="recommendation">
+                <a href="/product/<%=item._id%>" class="product-card">
+                  <div class="product-img">
+                    <img src="<%= item.mainImage.url  %>" alt="">
+                  </div>
+                  <div class="product-desc">
+                    <div class="product-name"><%= item.name  %> </div>
+                    <div class="product-spec" style="max-height: 65px; overflow: hidden;">
+                      <%= item.description %> 
+                    </div>
+                    <div class="product-price">
+                      ₹<%= item.price %>
+                      &nbsp;
+                      <strike style="font-size: small;">
+                        ₹<%= item.MRP %>
+                      </strike>
+                    </div>
+                  </div>
+                </a>
+              </div>
+            </div>
+        <% }) %> 
+      </div>
+    </div>
+  </div>
+</div>

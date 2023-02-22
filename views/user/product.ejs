@@ -1,0 +1,144 @@
+<link rel="stylesheet" href="/css/slider.css">
+<script src="https://unpkg.com/js-image-zoom@0.4.1/js-image-zoom.js" type="application/javascript"></script>
+<%- include('../partials/header') %>
+<div class="product-main">
+  <div class="container">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <div class="car-container">
+          <div class="product-img-main">
+          <div class="show" href="<%=product.mainImage.url%>">
+            <img src="<%=product.mainImage.url%>" id="show-img">
+          </div>
+        
+          <!-- Secondary carousel image thumbnail gallery -->
+        
+              <div class="small-img">
+              <img src="/images/next-icon.png" class="icon-left" alt="" id="prev-img">
+                <div class="small-container">
+                <div id="small-img-roll">
+                  <% product.sideImages.forEach((item, index)=>{ %>
+                    <img src="<%=item.url%>" class="show-small-img" alt="">
+                    <% }) %>
+                </div>
+                </div>
+              <img src="/images/next-icon.png" class="icon-right" alt="" id="next-img">
+            </div>
+
+          </div>
+        </div>
+        <div class="btns">
+          <button class="btn-gt-cart" 
+          onclick="window.location.href='/cart'"
+          >Go to Cart</button>
+          <button class="btn-ad-cart"
+          onclick="window.location.href='/add-to-cart/<%=product._id %>'"
+          >Add To Cart</button>
+        </div>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="product-container">
+          <div class="product-head mt-5" id="productHead">
+            <h3 ><%= product.name  %> </h3>
+            <div id="wishlist">
+
+              <% if(wish){ %> 
+                <i class="ri-heart-fill" style="color:red"
+                onclick="removeFromWishlist()"></i>
+                <% }else{ %> 
+                  <i class="ri-heart-line"
+                  onclick="addToWishlist()"></i>
+                  <% } %> 
+            </div>
+          </div>
+          <div class="ratings">
+            <% for(let i=0; i<rating; i++) {%> 
+            <i class="ri-star-fill rating-color"></i>
+            <% }for(let i=0; i<5-rating; i++){ %>
+            <i class="ri-star-line"></i>
+            <% } %> 
+          </div>
+          <div class="rating-desc">
+            <b><%= product.ratings.length  %>  </b>Rating and <b> <%= product.reviews.length  %> </b>Reviews
+          </div>
+          <div class="product-price mt-3">
+            <h3 class="me-2">₹<%= product.price  %>  </h3>
+            <strike>₹<%= product.MRP  %> </strike>
+          </div>
+          <h4 class="mt-4">Specificiation</h4>
+<textarea name="" id="" style="width: 100%;" class="product-textarea" rows="7" disabled>
+<%= product.description  %> 
+</textarea>
+          <h4 class="mt-2">Ratings and Reviews</h4>
+          <div class="ratings">
+            <% for(let i=0; i<rating; i++) {%> 
+              <i class="ri-star-fill rating-color"></i>
+              <% }for(let i=0; i<5-rating; i++){ %>
+              <i class="ri-star-line"></i>
+              <% } %> 
+          </div>
+          <div class="rating-desc">
+            <b><%= product.ratings.length  %>  </b>Rating and <b> <%= product.reviews.length  %> </b>Reviews
+          </div>
+          <div class="review-sec mt-1">
+            <% product.reviews.forEach((item)=>{ %>
+
+              <div class="review">
+                <div class="review-profile">
+                <img src="/images/man.png" style="border: 2px solid rgb(186, 186, 248);" alt="" />
+                <div class="review-name">
+                  <b><%= item.userName %> </b>
+                  <% if(ratings[item.userId]){ %> 
+                  <span><%= ratings[item.userId] %> <i class="ri-star-fill"></i></span>
+                  <% } %> 
+                </div>
+              </div>
+              <pre class="review-desc"><%=item.review  %></pre>
+            </div>
+  
+            <% }) %> 
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+  </div>
+  <script src="https://unpkg.com/axios@1.1.2/dist/axios.min.js"></script>
+<script>
+  let productId='<%=product._id %>'
+  function quantityInc(){
+    var quantity= document.getElementById("quantity")
+    quantity.value++;
+  }
+  function quantityDec(){
+    var quantity= document.getElementById("quantity")
+    quantity.value--;
+  }
+
+  let wishlist= document.getElementById('wishlist')
+  async function addToWishlist(){
+  let response=await axios.get("/add-to-wishlist/"+productId);
+  if(!response.data.success){
+      window.location.href="/login"
+    }else{
+      wishlist.innerHTML=`<i class="ri-heart-fill" style="color:red"
+      onclick="removeFromWishlist()"></i>`
+    }
+                
+  }
+  async function removeFromWishlist(){
+    if(confirm('Are you sure remove this item from wishlist ?')) {
+          wishlist.innerHTML=`<i class="ri-heart-line"
+          onclick="addToWishlist()"></i>`
+          let response=await axios.get('/remove-from-wishlist/'+productId)
+  }        
+  }
+</script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"
+        integrity="sha384-tsQFqpEReu7ZLhBV2VZlAu7zcOV+rXbYlF2cqB8txI/8aZajjp4Bqd+V6D5IgvKT"
+        crossorigin="anonymous"></script>
+     <script src="/javascript/slider/zoom-image.js"></script>
+     <script src="/javascript/slider/main.js"></script>

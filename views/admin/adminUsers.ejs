@@ -1,0 +1,124 @@
+<%- include('../partials/adminHeader') %>
+<div class="orders-main">
+  <div class="side-menu" id="adminSideMenu">
+    <a href="/admin/">
+      <li><i class="ri-dashboard-fill"></i>DashBoard</li>
+    </a>
+    <a href="/admin/orders">
+      <li ><i class="ri-shopping-bag-fill"></i> Orders</li>
+    </a>
+    <a href="/admin/product">
+      <li><i class="ri-smartphone-fill"></i> Products</li>
+    </a>
+    <a href="/admin/users">
+      <li  class="selected"><i class="ri-user-fill"></i> Users</li>
+    </a>
+    <a href="/admin/category">
+        <li><i class="ri-layout-grid-fill"></i> Category</li>
+      </a>
+      <a href="/admin/offers">
+        <li><i class="ri-percent-fill"></i> Offers Banner</li>
+      </a>
+      <a href="/admin/banned-users">
+        <li><i class="ri-indeterminate-circle-fill"></i> Banned Users</li>
+      </a>
+    <a href="/admin/coupons">
+      <li><i class="ri-ticket-fill"></i> Coupons</li>
+    </a>
+    <a href="/admin/sales-report">
+      <li><i class="ri-file-chart-fill"></i> Sales Report</li>
+    </a>
+  </div>
+  <div class="order-container">
+    <div class="w-100 mt-3 d-flex align-items-center tablesHeader">
+        <h3>Users</h3>
+        <form action="/admin/users" method="get" class="product-search">
+            <input type="text" placeholder="search for users" name="name" value="<%= name %>">
+            <button class="ri-search-line"></button>
+        </form>
+    </div>
+    <div class="row mt-2 p-3">
+        <div class="orders-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                      <th scope="col">Name</th>
+                      <th scope="col">Email</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% users.forEach(item=>{ %>
+                      <tr>
+                        <th scope="row"><%=item.name  %> </th>
+                        <td><%= item.email  %> </td>
+                        <td>
+                          <a class="btn btn-outline-dark" onclick="banThis('<%=item._id%>')">ban</a>
+                          <!-- <div class="dropdown">
+                          <button class="btn btn-white dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                              <i class="ri-more-2-fill"></i>
+                          </button>
+                          <ul class="dropdown-menu">
+                            <li>
+                              <a class="dropdown-item" onclick="banThis('<%=item._id%>')">ban</a>
+                            </li>
+                          </ul>
+                        </div> -->
+                      </td>
+                      </tr>
+                    <% }) %> 
+                  </tbody>
+              </table>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center mt-5">
+      <% if(pageCount>0) {%> 
+      <nav aria-label="Page navigation example text-dark pl-pagination">
+        <ul class="pagination d-flex justify-content-center text-dark">
+          <li class="page-item ">
+            <span class="page-link text-dark" aria-label="Previous">
+              <span aria-hidden="true" onclick="gotoPage('<%=pageCount-1%>')">&laquo;</span>
+            </span>
+          </li>
+          <% for(let i=0; i<=pageCount; i++) {%> 
+          <li class="page-item"><span onclick="gotoPage('<%=i%>')" class="page-link text-dark"
+            <% if(page==i){ %> style="font-weight:1000;" <% } %> 
+            ><%= i+1  %> </span></li>
+          <% } %>
+          <li class="page-item">
+            <span class="page-link text-dark" aria-label="Next">
+              <span aria-hidden="true" onclick="gotoPage('<%=pageCount%>')">&raquo;</span>
+            </span>
+          </li>
+        </ul>
+      </nav>
+      <% } %> 
+    </div>
+  </div>
+</div>
+
+<script>
+  function banThis(id){
+    if(confirm("Are You Sure Ban this user")){
+        window.location.href=`/admin/ban-user/${id}`
+    }
+  }
+  function gotoPage(page){
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('page', page);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    window.location.href=new_url
+  }
+
+  function showFilter(){
+    var filterSec=document.querySelector('.filter-sec');
+    filterSec.style.top="50px"
+  }
+  function hideFilter(){
+    var filterSec=document.querySelector('.filter-sec');
+    filterSec.style.top="-1000px"
+  }
+
+</script>

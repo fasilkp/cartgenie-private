@@ -1,0 +1,24 @@
+<div class="add-product-main">
+    <h3>Add Category</h3>
+    <form action="/admin/add-category" method="post" class="add-product-container mt-3">
+        <div class="a-p-form-row">
+            <div class="a-p-form-col">
+                <label for="Name">Category</label>
+                <input type="text" name="category" placeholder="category" required>
+            </div>
+        </div>
+        <div class="a-p-form-row">
+            <button type="submit">Pay</button>
+        </div>
+    </form>
+</div>
+<script src="https://sdk.cashfree.com/js/ui/2.0.0/cashfree.sandbox.js"></script>
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+<script>
+    window.onload= function(){
+      var paymentSessionId = "<%= sessionId%>";
+      const cashfree = new Cashfree(paymentSessionId);
+      cashfree.redirect();
+      
+}
+</script>

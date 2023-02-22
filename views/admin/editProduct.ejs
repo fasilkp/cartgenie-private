@@ -1,0 +1,128 @@
+<%- include('../partials/adminHeader') %>
+<div class="add-product-main">
+  <h3>Edit Product</h3>
+  <form action="/admin/edit-product" method="post" id="editProductForm" class="add-product-container mt-3" enctype="multipart/form-data">
+    <input type="text" placeholder="Product Name" name="_id" required value="<%=product._id %>" style="height: 0px; visibility: hidden;" />
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Name">Name</label>
+        <input type="text" placeholder="Product Name" name="name" required value="<%=product.name %>" />
+      </div>
+      <div class="a-p-form-col">
+        <label for="Category">Category</label>
+        <select name="category" placeholder="category" required name="category" value="<%=product.category %>" >
+          <% categories.forEach(item=>{ %> 
+              <option value="<%=item._id+' '+item.category  %>" <% if(product.categoryId==item._id){ %> selected <% } %>><%= item.category  %></option>
+          <% }) %> 
+      </select>
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Name">Brand</label>
+        <input type="text" placeholder="Brand" name="brand" required value="<%=product.brand %>" />
+      </div>
+      <div class="a-p-form-col">
+        <label for="Category">Quanitity</label>
+        <input type="text" placeholder="Quantity" name="quantity" required value="<%=product.quantity %>" />
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Name">MRP</label>
+        <input type="text" placeholder="MRP" name="MRP" required value="<%=product.MRP %>" />
+      </div>
+      <div class="a-p-form-col">
+        <label for="Category">Price</label>
+        <input type="text" placeholder="category" name="price" required value="<%=product.price %>" />
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Category">Description</label>
+        <textarea name="" id="" rows="4" name="description" placeholder="Description" form="editProductForm">
+<%= product.description  %> 
+                </textarea>
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-img" id="singleImage">
+        <img src="<%=product.mainImage.url %>" alt="" />
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Category">Image</label>
+        <input type="file" name="image" id="sImg" accept="image/*" onchange="changeSingleImage()" />
+        <!-- <input class="form-control a-p-file form-control-lg" id="formFileLg" type="file"> -->
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <label for="Category">Select to delete Image</label><br>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-img" id="oldImage" >
+        <% product.sideImages.forEach((item, index)=>{ %>
+          <img src="<%=item.url %>" alt="">
+          <label for="<%=item.url %>" >
+            <i class="ri-close-fill"></i>
+            <input type="checkbox" id="<%=item.url %>" value="<%=item.url %>"  name="deletedImages">
+          </label>
+        <% })  %> 
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-img" id="multiImage">
+         
+      </div>
+    </div>
+    <div class="a-p-form-row">
+      <div class="a-p-form-col">
+        <label for="Category">Other Images</label>
+        <input type="file" name="images" id="mImg" accept="image/*"  multiple onchange="changeMultiImage()" />
+      </div>
+    </div>
+    <% if(error){ %> 
+      <b class="text-danger"><%= message  %> </b>
+    <% } %> 
+    <div class="a-p-form-row">
+      <button type="submit">Edit product</button>
+    </div>
+  </form>
+  </div>
+</div>
+<% var productImages= product.sideImages %> 
+<script>
+  var productImages=JSON.parse('<%- JSON.stringify(productImages)%>')
+  function changeSingleImage() {
+    const file = document.getElementById("sImg").files[0];
+    var binaryData = [];
+    binaryData.push(file);
+    var imageData = window.URL.createObjectURL(
+      new Blob(binaryData, {
+        type: "application/zip"
+      })
+    );
+    document.getElementById("singleImage").innerHTML= `<img src="${imageData}" />`
+  }
+  function changeMultiImage() {
+    const files = document.getElementById("mImg").files;
+    const multiImage=document.getElementById("multiImage");
+    multiImage.innerHTML=""
+    Array.from(files).forEach((file) => {
+      var binaryData = [];
+      binaryData.push(file);
+      var imageData = window.URL.createObjectURL(
+        new Blob(binaryData, {
+          type: "application/zip"
+        })
+      );
+      var img=document.createElement('img')
+      img.src=imageData;
+      multiImage.appendChild(img)
+    });
+  }
+
+
+ 
+</script>

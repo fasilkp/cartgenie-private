@@ -1,0 +1,151 @@
+<%- include('../partials/adminHeader') %>
+<div class="orders-main">
+  <div class="side-menu" id="adminSideMenu">
+    <a href="/admin/">
+      <li><i class="ri-dashboard-fill"></i>DashBoard</li>
+    </a>
+    <a href="/admin/orders">
+      <li class="selected"><i class="ri-shopping-bag-fill"></i> Orders</li>
+    </a>
+    <a href="/admin/product">
+      <li><i class="ri-smartphone-fill"></i> Products</li>
+    </a>
+    <a href="/admin/users">
+      <li><i class="ri-user-fill"></i> Users</li>
+    </a>
+    <a href="/admin/category">
+      <li><i class="ri-layout-grid-fill"></i> Category</li>
+    </a>
+    <a href="/admin/offers">
+      <li><i class="ri-percent-fill"></i> Offers Banner</li>
+    </a>
+    <a href="/admin/banned-users">
+      <li><i class="ri-indeterminate-circle-fill"></i> Banned Users</li>
+    </a>
+    <a href="/admin/coupons">
+      <li><i class="ri-ticket-fill"></i> Coupons</li>
+    </a>
+    <a href="/admin/sales-report">
+      <li><i class="ri-file-chart-fill"></i> Sales Report</li>
+    </a>
+  </div>
+  <div class="order-container">
+    <div class="w-100 mt-3 d-flex align-items-center tablesHeader">
+      <h3>Orders</h3>
+      <form class="product-search" action="/admin/orders" method="get">
+          <input type="text" placeholder="search for orders" name="name" value="<%= name %>">
+          <button class="ri-search-line"></button>
+      </form>
+      <form action="/admin/orders" method="get">
+
+        <select name="filter" class="form-select form-select-lg order-status-filter" onchange="this.form.submit()" aria-label=".form-select-lg example" class="order-status-filter">
+          <option selected>filte by status</option>
+          <option value="pending">Pending</option>
+          <option value="outForDelivery">Out for delivery</option>
+          <option value="delivered">Delivered</option>
+          <option value="cancelled">Cancelled</option>
+          <option value="returnProcessing">Return Processing</option>
+          <option value="returned">Returned</option>
+      </select>
+    </form>
+      
+
+  </div>
+
+    <div class="row mt-2 p-3">
+        <div class="orders-table">
+            <table class="table table-striped">
+                <thead>
+                    <tr>
+                      <th scope="col">Order ID</th>
+                      <th scope="col">Name</th>
+                      <th scope="col">User</th>
+                      <th scope="col">Payment Status</th>
+                      <th scope="col">Status</th>
+                      <th scope="col">Quantity</th>
+                      <th scope="col">Total</th>
+                      <th scope="col">Action</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <% orders.forEach((item,index)=>{ %>
+
+                    <tr>
+                      <th scope="row">
+                        <%= item.orderId %> 
+                       </th>
+                      <th scope="row">
+                        <a href="/admin/order-details/<%=item._id%>">
+                          <%=item.product.name  %>
+                        </a>
+                       </th>
+                      <td><%=item.address.name  %> </td>
+                      <td>
+                        <% if(item.paid){ %> Paid
+                        <% }else{ %> Not Paid <% } %> 
+                        </td>
+                        
+                        <td >
+                          <div class="del-status <%= item.orderStatus  %> ">
+                              <%= item.orderStatus  %> 
+                          </div>
+                      </td>
+                        <td><%=item.quantity  %> </td>
+                        <td><%=item.total %> </td>
+                        <td>
+                        <a class="btn btn-outline-dark" href="/admin/edit-order/<%=item._id%>">Edit</a>
+                    </td>
+                    </tr>
+                    <%}) %> 
+
+                    
+                  </tbody>
+              </table>
+        </div>
+    </div>
+    <div class="row d-flex justify-content-center mt-5">
+      <% if(pageCount>0) {%> 
+      <nav aria-label="Page navigation example text-dark pl-pagination">
+        <ul class="pagination d-flex justify-content-center text-dark">
+          <li class="page-item ">
+            <span class="page-link text-dark" aria-label="Previous">
+              <span aria-hidden="true" onclick="gotoPage('<%=pageCount-1%>')">&laquo;</span>
+            </span>
+          </li>
+          <% for(let i=0; i<=pageCount; i++) {%> 
+          <li class="page-item"><span onclick="gotoPage('<%=i%>')" class="page-link text-dark"
+            <% if(page==i){ %> style="font-weight:1000;" <% } %> 
+            ><%= i+1  %> </span></li>
+          <% } %>
+          <li class="page-item">
+            <span class="page-link text-dark" aria-label="Next">
+              <span aria-hidden="true" onclick="gotoPage('<%=pageCount%>')">&raquo;</span>
+            </span>
+          </li>
+        </ul>
+      </nav>
+      <% } %> 
+    </div>
+  </div>
+</div>
+
+
+<script>
+  function gotoPage(page){
+    var url = new URL(window.location.href);
+    var search_params = url.searchParams;
+    search_params.set('page', page);
+    url.search = search_params.toString();
+    var new_url = url.toString();
+    window.location.href=new_url
+  }
+
+  function showFilter(){
+    var filterSec=document.querySelector('.filter-sec');
+    filterSec.style.top="50px"
+  }
+  function hideFilter(){
+    var filterSec=document.querySelector('.filter-sec');
+    filterSec.style.top="-1000px"
+  }
+</script>

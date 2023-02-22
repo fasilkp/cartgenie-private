@@ -1,0 +1,77 @@
+<header class="user-header">
+  <div class="container">
+    <div class="row">
+
+        <div class="col-12 col-md-3 header-item">
+            <i id="sidebarBtn" class="ri-menu-2-line d-block d-md-none"></i>
+            <a href="/"><h1><img src="/images/logo.png" height="54" alt="" style="margin-top: -10px;">cartGenie</h1></a>
+        </div>
+        <div class="col-12 col-md-5 header-item">
+            <form class="search-box" action="/search">
+                <input type="text" value="<%= key  %>" name="key" placeholder="search products">
+                <button class="ri-search-line"></button>
+            </form>
+        </div>
+        <div class="col-1 col-md-4 header-item justify-content-end">
+            <div class="header-right">
+                <a href="/search?key=" class="right-icon">
+                    <b style="color: rgb(0, 102, 255);" class="d-flex align-items-center"><i class="ri-store-line me-2"></i> Shop Now!</b>
+                </a>
+                <a href="/wishlist" class="right-icon">
+                    <i class="ri-heart-line"></i>
+                </a>
+                <a href="/cart" class="right-icon">
+                    <i class="ri-shopping-cart-line"></i>
+                </a>
+                <a href="/coupons" class="right-icon">
+                    <i class="ri-coupon-2-line"></i>
+                </a>
+                <a href="/profile" class="right-icon profile">
+                    <i class="ri-user-line"></i>
+                </a>
+                
+            </div>
+        </div>
+    </div>
+  </div>
+</header>
+
+<div class="sidebar" id="sidebar">
+    <div class="sidebar-container" id="sidebarContainer">
+        <div class="side-head">
+            <i id="sideClose" class="ri-close-fill"></i>
+        </div>
+        <div class="side-items">
+            <a href="/profile"><i class="ri-user-line"></i> <li>Profile</li></a>
+            <a href="/cart"><i class="ri-shopping-cart-line"></i> <li>Cart</li></a>
+            <a href="/wishlist"><i class="ri-shopping-bag-2-line"></i> <li>My Wishlist</li></a>
+            <a href="/orders"><i class="ri-heart-line"></i> <li>My Orders</li></a>
+            <a href="/coupons"><i class="ri-coupon-line"></i> <li>Coupons</li></a>
+        </div>
+        <div class="logout-btn">
+            <a href="/logout"><i class="ri-logout-box-line"></i><span>Logout</span></a>
+        </div>
+    </div>
+</div>
+
+<script>
+    var sidebarBtn = document.getElementById("sidebarBtn");
+    var sidebar = document.getElementById("sidebar");
+    var sidebarContainer = document.getElementById("sidebarContainer");
+    var sideClose = document.getElementById("sideClose");
+
+    sidebarBtn.addEventListener("click", ()=>{
+        sidebar.classList.add("open")
+    })
+    sidebar.addEventListener("click", ()=>{
+        sidebar.classList.remove("open")
+    })
+    sideClose.addEventListener("click", (e)=>{
+        e.stopPropagation()
+        sidebar.classList.remove("open")
+    })
+    sidebarContainer.addEventListener("click", (e)=>{
+        e.stopPropagation()
+        sidebar.classList.add("open")
+    })
+</script>
