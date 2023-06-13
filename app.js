@@ -26,11 +26,11 @@ app.use(session({
     saveUninitialized:true,
     resave:false,
     store: MongoStore.create({ mongoUrl: process.env.DB_CONFIG }),
-    proxy: true,
+    // proxy: true,
     cookie:{
             sameSite:"none",
-            secure:true,
-            httpOnly:true,
+            // secure:true,
+            // httpOnly:true,
             // domain:"cartgenie.store",
             maxAge:60*60*1000*24*7
     }
