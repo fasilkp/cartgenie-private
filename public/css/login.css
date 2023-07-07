@@ -53,6 +53,12 @@
     color: var(--white);
     font-weight: 650;
 }
+.login-box form button:nth-of-type(2){
+    color: black;
+    background-color: var(--white);
+    border: 1.5px solid black;
+    height: 40px;
+}
 .login-image-container{
     overflow: hidden;
     display: flex;

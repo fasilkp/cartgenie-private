@@ -25,6 +25,7 @@ export async function adminLogin(req, res){
             id:admin._id,
             name:admin.name
         }
+        console.log("hai")
         return res.redirect("/admin/")
     }else{
         return res.render("admin/adminLogin",{

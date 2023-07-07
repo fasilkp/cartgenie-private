@@ -18,7 +18,6 @@ export async function getAdminOrders(req, res) {
   let pageCount=await orderModel.find().count()
   let orders
   if(req.query.name){
-
     if(isNaN(name)){
       orders = await orderModel.find({"address.name":new RegExp(name, 'i')}).sort({ createdAt: -1 }).skip(page*10).limit(10)
       .lean();
